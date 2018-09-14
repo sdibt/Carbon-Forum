@@ -51,30 +51,3 @@ if($UpdateUserInfoMessage){
 		<input type="submit" value="<?php echo $Lang['Save_Settings']; ?>" name="submit" class="button" />
 	</div>
 </form>
-
-
-
-
-<div class="formGroupHead"><?php echo $Lang['Security_Settings']; ?></div>
-<?php
-if($ChangePasswordMessage){
-?>
-<script type="text/javascript">CarbonAlert("<?php echo $ChangePasswordMessage; ?>");</script>
-<?php
-}
-?>
-<form method="post" action="<?php echo $Config['WebsitePath']; ?>/settings">
-	<div class="input-group">
-		<input type="hidden" name="Action" value="ChangePassword" />
-<?php
-if(!$DoNotNeedOriginalPassword){
-?>
-		<input type="password" placeholder="<?php echo $Lang['Current_Password']; ?>" name="OriginalPassword" value="" />
-<?php
-}
-?>
-		<input type="password" placeholder="<?php echo $Lang['New_Password']; ?>" name="NewPassword" value="" />
-		<input type="password" placeholder="<?php echo $Lang['Confirm_New_Password']; ?>" name="NewPassword2" value="" />
-		<input type="submit" value="<?php echo $Lang['Change_Password']; ?>" name="submit" class="button" />
-	</div>
-</form>

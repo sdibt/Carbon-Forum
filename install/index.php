@@ -31,10 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$DBName = $_POST['DBName'];
 		$DBUser = $_POST['DBUser'];
 		$DBPassword = $_POST['DBPassword'];
-		$SearchServer = $_POST['SearchServer'];
-		$SearchPort = $_POST['SearchPort'];
-		$EnableMemcache = $_POST['EnableMemcache'];
-		$MemCachePrefix = $_POST['MemCachePrefix'];
 	} else {
 		die("An Unexpected Error Occured!");
 	}
@@ -73,10 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$ConfigBuffer = str_replace("{{DBName}}", $DBName, $ConfigBuffer);
 	$ConfigBuffer = str_replace("{{DBUser}}", $DBUser, $ConfigBuffer);
 	$ConfigBuffer = str_replace("{{DBPassword}}", $DBPassword, $ConfigBuffer);
-	$ConfigBuffer = str_replace("{{SearchServer}}", $SearchServer, $ConfigBuffer);
-	$ConfigBuffer = str_replace("{{SearchPort}}", $SearchPort, $ConfigBuffer);
-	$ConfigBuffer = str_replace("{{EnableMemcache}}", $EnableMemcache, $ConfigBuffer);
-	$ConfigBuffer = str_replace("{{MemCachePrefix}}", $MemCachePrefix, $ConfigBuffer);
 
 	fclose($ConfigPointer);
 	$ConfigPHP = fopen("../config.php", "w+");
@@ -258,37 +250,6 @@ function GetNextSQL()
 																	 value=""/></td>
 							</tr>
 							<tr>
-								<td colspan="2" class="title">高级选项（可不填） / Advanced Settings (Optional)</td>
-
-							</tr>
-							<tr>
-								<td width="280" align="right">Sphinx搜索服务器&nbsp;&nbsp;/&nbsp;&nbsp;Sphinx Search Server
-								</td>
-								<td width="auto" align="left"><input type="text" name="SearchServer" class="sl w200"
-																	 value=""/></td>
-							</tr>
-							<tr>
-								<td width="280" align="right">Sphinx搜索端口&nbsp;&nbsp;/&nbsp;&nbsp;Sphinx Search Port</td>
-								<td width="auto" align="left"><input type="text" name="SearchPort" class="sl w200"
-																	 value=""/></td>
-							</tr>
-							<tr>
-								<td width="280" align="right">打开缓存&nbsp;&nbsp;/&nbsp;&nbsp;Enable Cache<br/>(Memcached /
-									Redis / XCache)
-								</td>
-								<td width="auto" align="left">
-									<select name="EnableMemcache">
-										<option value="false">关闭 / False</option>
-										<option value="true">打开 / True</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td width="280" align="right">缓存前缀&nbsp;&nbsp;/&nbsp;&nbsp;Cache Prefix</td>
-								<td width="auto" align="left"><input type="text" name="MemCachePrefix" class="sl w200"
-																	 value="carbon_"/></td>
-							</tr>
-							<tr>
 								<td width="280" align="right"></td>
 								<td width="auto" align="left"><input type="submit" value="安 装 / Install " name="submit"
 																	 class="textbtn"/></td>
@@ -318,12 +279,6 @@ function GetNextSQL()
 	<!-- main end -->
 	<div class="c"></div>
 
-	<!-- footer start -->
-	<div class="Copyright">
-		<p>
-			Powered By <a href="https://www.94cb.com" target="_blank">Carbon Forum</a> © 2006-2016
-		</p>
-	</div>
 	<!-- footer end -->
 
 </div>

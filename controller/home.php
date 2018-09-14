@@ -9,9 +9,7 @@ if ($Page > $TotalPage)
 if ($Page == 0)
 	$Page = 1;
 $TopicsArray = array();
-if ($MCache && $Page == 1) {
-	$TopicsArray = $MCache->get(MemCachePrefix . 'Homepage');
-}
+
 if (!$TopicsArray) {
 	if ($Page <= 10) {
 		$TopicsArray = $DB->query('SELECT `ID`, `Topic`, `Tags`, `UserID`, `UserName`, `LastName`, `LastTime`, `Replies` 
@@ -19,9 +17,6 @@ if (!$TopicsArray) {
 			WHERE IsDel=0 
 			ORDER BY LastTime DESC 
 			LIMIT ' . ($Page - 1) * $Config['TopicsPerPage'] . ',' . $Config['TopicsPerPage']);
-		if ($MCache && $Page == 1) {
-			$MCache->set(MemCachePrefix . 'Homepage', $TopicsArray, 600);
-		}
 	} else {
 		$TopicsArray = $DB->query('SELECT `ID`, `Topic`, `Tags`, `UserID`, `UserName`, `LastName`, `LastTime`, `Replies` 
 			FROM ' . PREFIX . 'topics force index(LastTime) 

@@ -32,37 +32,9 @@ require(LibraryPath . 'WhiteHTMLFilterConfig.php');
 require(LibraryPath . 'WhiteHTMLFilter.php');
 
 $DB = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
-//Initialize MemCache(d) / Redis
-$MCache = false;
-if (EnableMemcache) {
-	if (extension_loaded('memcached')) {
-		//MemCached
-		$MCache = new Memcached(MemCachePrefix . 'Cache');
-		//Using persistent memcached connection
-		if (!count($MCache->getServerList())) {
-			$MCache->addServer(MemCacheHost, MemCachePort);
-		}
-	} elseif (extension_loaded('memcache')) {
-		//MemCache
-		require(LibraryPath . "MemcacheMod.class.php");
-		$MCache = new MemcacheMod(MemCacheHost, MemCachePort);
-	} elseif (extension_loaded('redis')) {
-		//Redis
-		//https://github.com/phpredis/phpredis
-		$MCache = new Redis();
-		$MCache->pconnect(MemCacheHost, MemCachePort);
-	} elseif (extension_loaded('xcache')) {
-		// XCache
-		require(LibraryPath . "XCache.class.php");
-		$MCache = new XCache();
-	}
-}
-
 //Load configuration
 $Config = array();
-if ($MCache) {
-	$Config = $MCache->get(MemCachePrefix . 'Config');
-}
+
 if (!$Config) {
 	foreach ($DB->query('SELECT ConfigName,ConfigValue FROM ' . PREFIX . 'config') as $ConfigArray) {
 		$Config[$ConfigArray['ConfigName']] = $ConfigArray['ConfigValue'];
@@ -72,13 +44,9 @@ if (!$Config) {
 		header("Location: update/"); // Bring user to installation
 		exit(); //No errors
 	}
-	if ($MCache) {
-		$MCache->set(MemCachePrefix . 'Config', $Config, 86400);
-	}
 }
 // 热门标签列表
-$HotTagsArray = json_decode($Config['CacheHotTags'], true);
-$HotTagsArray = $HotTagsArray ? $HotTagsArray : array();
+$HotTagsArray = array();
 
 $PHPSelf = addslashes(htmlspecialchars($_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME']));
 $UrlPath = '';
@@ -114,7 +82,7 @@ function AddingNotifications($Content, $TopicID, $PostID, $FilterUser = '')
 	1:新回复
 	2:@ 到我的
 	*/
-	global $DB, $MCache, $TimeStamp, $CurUserName;
+	global $DB, $TimeStamp, $CurUserName;
 	$InTransaction = $DB->inTransaction();//是否处于其他事务之中
 	//例外列表
 	$ExceptionUser = array(
@@ -150,10 +118,6 @@ function AddingNotifications($Content, $TopicID, $PostID, $FilterUser = '')
 					$DB->query('UPDATE `' . PREFIX . 'users` SET `NewMention` = NewMention+1 WHERE ID = :UserID', array(
 						'UserID' => $UserID
 					));
-					//清理内存缓存
-					if ($MCache) {
-						$MCache->delete(MemCachePrefix . 'UserInfo_' . $UserID);
-					}
 				}
 			}
 			if (!$InTransaction) {
@@ -625,7 +589,7 @@ function TagsDiff($Arr1, $Arr2)
 //修改系统设置
 function UpdateConfig($NewConfig)
 {
-	global $DB, $Config, $MCache;
+	global $DB, $Config;
 	if ($NewConfig) {
 		foreach ($NewConfig as $Key => $Value) {
 			$DB->query("UPDATE `" . PREFIX . "config` SET ConfigValue=? WHERE ConfigName=?", array(
@@ -633,9 +597,6 @@ function UpdateConfig($NewConfig)
 				$Key
 			));
 			$Config[$Key] = $Value;
-		}
-		if ($MCache) {
-			$MCache->set(MemCachePrefix . 'Config', $Config, 86400);
 		}
 		return true;
 	} else {
@@ -648,7 +609,7 @@ function UpdateConfig($NewConfig)
 //修改用户资料
 function UpdateUserInfo($NewUserInfo, $UserID = 0)
 {
-	global $DB, $CurUserID, $CurUserInfo, $MCache;
+	global $DB, $CurUserID, $CurUserInfo;
 	if ($UserID == 0) {
 		$UserID = $CurUserID;
 	}
@@ -661,11 +622,6 @@ function UpdateUserInfo($NewUserInfo, $UserID = 0)
 		$Result = $DB->query('UPDATE `' . PREFIX . 'users` SET ' . $StringBindParam . ' WHERE ID = :UserID', array_merge($NewUserInfo, array(
 			'UserID' => $UserID
 		)));
-		if ($MCache) {
-			$MCache->set(MemCachePrefix . 'UserInfo_' . $UserID, $DB->row("SELECT *, (NewReply + NewMention + NewMessage) as NewNotification FROM " . PREFIX . "users WHERE ID = :UserID", array(
-				"UserID" => $UserID
-			)), 86400);
-		}
 		return $Result;
 	} else {
 		return false;
@@ -812,16 +768,10 @@ $CurUserCode = GetCookie('UserCode');
 
 if ($CurUserExpirationTime > $TimeStamp && $CurUserExpirationTime < ($TimeStamp + 2678400) && $CurUserID && $CurUserCode) {
 	$TempUserInfo = array();
-	if ($MCache) {
-		$TempUserInfo = $MCache->get(MemCachePrefix . 'UserInfo_' . $CurUserID);
-	}
 	if (empty($TempUserInfo)) {
 		$TempUserInfo = $DB->row("SELECT *, (NewReply + NewMention + NewMessage) as NewNotification FROM " . PREFIX . "users WHERE ID = :UserID", array(
 			"UserID" => $CurUserID
 		));
-		if ($MCache && $TempUserInfo) {
-			$MCache->set(MemCachePrefix . 'UserInfo_' . $CurUserID, $TempUserInfo, 86400);
-		}
 	}
 	if ($TempUserInfo && HashEquals(md5($TempUserInfo['Password'] . $TempUserInfo['Salt'] . $CurUserExpirationTime . SALT), $CurUserCode)) {
 		$CurUserName = $TempUserInfo['UserName'];

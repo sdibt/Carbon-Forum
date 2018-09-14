@@ -3,17 +3,13 @@ require(LanguagePath . 'topic.php');
 $ID   = intval(Request('Request', 'id'));
 $Page = intval(Request('Request', 'page'));
 
-$Topic = $MCache ? $MCache->get(MemCachePrefix . 'Topic_' . $ID) : array();
-if (empty($Topic)) {
-	$Topic = $DB->row("SELECT * FROM " . PREFIX . "topics 
+
+$Topic = $DB->row("SELECT * FROM " . PREFIX . "topics 
 		FORCE INDEX(PRI) 
 		WHERE ID=:ID", array(
-		'ID' => $ID
-	));
-	if ($MCache) {
-		$MCache->set(MemCachePrefix . 'Topic_' . $ID, $Topic, 86400);
-	}
-}
+    'ID' => $ID
+));
+
 
 if (!$Topic || ($Topic['IsDel'] && $CurUserRole < 3)) {
 	AlertMsg('404 Not Found', '404 Not Found', 404);
@@ -41,31 +37,13 @@ if ($CurUserID) {
 		'FavoriteID' => $ID
 	)));
 }
-//更新浏览量
-if ($MCache) {
-	$TopicViews = $MCache->get(MemCachePrefix . 'Topic_Views_' . $ID);
-	//30天内攒满200次点击，Update一次数据库数据
-	if ($TopicViews && ($TopicViews - $Topic['Views']) >= 200) {
-		$DB->query("UPDATE " . PREFIX . "topics 
-			FORCE INDEX(PRI) 
-			SET Views = :Views,LastViewedTime = :LastViewedTime Where ID=:ID", array(
-			'Views' => $TopicViews + 1,
-			"LastViewedTime" => $TimeStamp,
-			"ID" => $ID
-		));
-		//清理主题缓存
-		$MCache->delete(MemCachePrefix . 'Topic_' . $ID);
-	}
-	$Topic['Views'] = (($TopicViews) ? $TopicViews : $Topic['Views']) + 1;
-	$MCache->set(MemCachePrefix . 'Topic_Views_' . $ID, $Topic['Views'], 86400 * 30);
-} else {
-	$DB->query("UPDATE " . PREFIX . "topics 
+
+$DB->query("UPDATE " . PREFIX . "topics 
 		FORCE INDEX(PRI) 
 		SET Views = Views+1,LastViewedTime = :LastViewedTime Where ID=:ID", array(
-		"LastViewedTime" => $TimeStamp,
-		"ID" => $ID
-	));
-}
+    "LastViewedTime" => $TimeStamp,
+    "ID" => $ID
+));
 //当回复内容与欲回复内容会同页时，不显示引用按钮
 if ($Page != $TotalPage || ($Topic['Replies'] + 1) % $Config['PostsPerPage'] == 0) {
 	$EnableQuote = true;

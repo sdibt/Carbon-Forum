@@ -14,36 +14,6 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for carbon_app
--- ----------------------------
-DROP TABLE IF EXISTS `carbon_app`;
-CREATE TABLE `carbon_app` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `AppKey` varchar(20) NOT NULL,
-  `AppName` varchar(32) NOT NULL,
-  `AppSecret` varchar(40) NOT NULL,
-  `Time` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `AppKey` (`AppKey`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for carbon_app_users
--- ----------------------------
-DROP TABLE IF EXISTS `carbon_app_users`;
-CREATE TABLE `carbon_app_users` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `AppID` int(10) unsigned NOT NULL,
-  `OpenID` varchar(64) NOT NULL,
-  `AppUserName` varchar(50) CHARACTER SET utf8,
-  `UserID` int(10) unsigned NOT NULL,
-  `Time` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `Index` (`AppID`,`OpenID`),
-  KEY `UserID` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
 -- Table structure for carbon_blogs
 -- ----------------------------
 DROP TABLE IF EXISTS `carbon_blogs`;
@@ -479,11 +449,6 @@ INSERT INTO `carbon_config` VALUES ('TopicsPerPage', '20');
 INSERT INTO `carbon_config` VALUES ('Version', '5.9.0');
 
 INSERT INTO `carbon_config` VALUES ('PushConnectionTimeoutPeriod', '22');
-INSERT INTO `carbon_config` VALUES ('SMTPHost', 'smtp1.example.com');
-INSERT INTO `carbon_config` VALUES ('SMTPPort', '587');
-INSERT INTO `carbon_config` VALUES ('SMTPAuth', 'true');
-INSERT INTO `carbon_config` VALUES ('SMTPUsername', 'user@example.com');
-INSERT INTO `carbon_config` VALUES ('SMTPPassword', 'secret');
 -- ----------------------------
 -- Records of carbon_roles
 -- ----------------------------

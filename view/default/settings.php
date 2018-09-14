@@ -19,8 +19,6 @@ $(document).ready(function(){
 		<ul class='resp-tabs-list'>
 			<li><?php echo $Lang['Avatar_Settings']; ?></li>
 			<li><?php echo $Lang['Profile_Settings']; ?></li>
-			<li><?php echo $Lang['Account_Settings']; ?></li>
-			<li><?php echo $Lang['Security_Settings']; ?></li>
 		</ul>
 		<div class="resp-tabs-container main-box">
 			<div>
@@ -87,67 +85,6 @@ $(document).ready(function(){
 					<tr>
 						<td width="180" align="right"></td>
 						<td width="auto" align="left"><input type="submit" value="<?php echo $Lang['Save_Settings']; ?>" name="submit" class="textbtn" /></td>
-					</tr>
-					
-				</tbody></table>
-				</form>
-			</div>
-			<div>
-				<table cellpadding="5" cellspacing="8" border="0" width="100%" class="fs14"><tbody>
-<?php
-foreach ($CurUserOauthData as $Value) {
-?>
-					<tr>
-						<td width="180" align="right"><img src="<?php echo $Config['WebsitePath'] . $OauthData[$Value['AppID']]['LogoUrl']; ?>" /></td>
-						<td width="auto" align="left" class="grey">
-								<?php echo $Value['AppUserName']?$Value['AppUserName']:'Unknown'; ?>&nbsp;(<?php echo FormatTime($Value['Time']); ?>)
-						</td>
-					</tr>
-<?php
-}
-foreach ($OauthData as $Value) {
-?>
-					<tr>
-						<td width="180" align="right"><img src="<?php echo $Config['WebsitePath'] . $Value['LogoUrl']; ?>" /></td>
-						<td width="auto" align="left">
-							<a href="<?php echo $Config['WebsitePath']; ?>/oauth-<?php echo $Value['ID']; ?>">
-								<?php echo str_replace('{{AppName}}', $Value['Alias'], $Lang['Connect_XXX_Account']); ?>
-							</a>
-						</td>
-					</tr>
-<?php
-}
-?>
-
-				</tbody></table>
-			</div>
-			<div>
-				<p class="red text-center"><?php echo $ChangePasswordMessage; ?></p>
-				<form method="post" action="<?php echo $Config['WebsitePath']; ?>/settings#settings4">
-				<input type="hidden" name="Action" value="ChangePassword" />
-				<table cellpadding="5" cellspacing="8" border="0" width="100%" class="fs14">
-					<tbody>
-<?php
-if(!$DoNotNeedOriginalPassword){
-?>
-					<tr>
-						<td width="180" align="right"><?php echo $Lang['Current_Password']; ?></td>
-						<td width="auto" align="left"><input type="password" class="w300" name="OriginalPassword" value="" /></td>
-					</tr>
-<?php
-}
-?>
-					<tr>
-						<td width="180" align="right"><?php echo $Lang['New_Password']; ?></td>
-						<td width="auto" align="left"><input type="password" class="w300" name="NewPassword"  id="Password" value="" /></td>
-					</tr>
-					<tr>
-						<td width="180" align="right"><?php echo $Lang['Confirm_New_Password']; ?></td>
-						<td width="auto" align="left"><input type="password" class="w300" name="NewPassword2" value="" /></td>
-					</tr>
-					<tr>
-						<td width="180" align="right"></td>
-						<td width="auto" align="left"><input type="submit" value="<?php echo $Lang['Change_Password']; ?>" name="submit" class="textbtn" /></td>
 					</tr>
 					
 				</tbody></table>

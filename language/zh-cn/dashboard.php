@@ -8,7 +8,6 @@ $Lang = array_merge($Lang, array(
 	'Page_Settings' => '页面设置',
 	'Advanced_Settings' => '高级设置',
 	'Parameter_Settings' => '参数设置',
-	'Refresh_Cache' => '更新缓存',
 
 	'Forum_Name' => '论坛名称',
 	'Forum_Descriptions' => '论坛描述<br /><br />给搜索引擎看的<br />150字符以内',
@@ -50,27 +49,14 @@ $Lang = array_merge($Lang, array(
 	'API_Domainname' => '客户端API域名',
 
 	'Push_Connection_Timeout_Period' => '推送超时时间<br />(如果你不知道这是什么请不要修改)',
-	'SMTP_Host' => 'SMTP 主机名',
-	'SMTP_Port' => 'SMTP 端口',
-	'SMTP_Auth' => 'SMTP 认证',
-	'SMTP_Username' => '邮箱地址',
-	'SMTP_Password' => '邮箱密码',
 
 	'Upload_Parameters' => '上传参数',
 	'Text_Filter_Parameter' => '文本过滤参数',
 
-	'Oauth_Settings' => 'oAuth设置',
-	'App_Key' => 'App Key',
-	'App_Secret' => 'App Secret',
 	'Callback_URL' => '回调地址',
 
-	'Refresh_Cache_Notice' => '更新缓存的操作可能需要较长时间，请耐心等待。<br />如果数据正确，则没有必要清理缓存。<br />这会消耗服务器大量资源，并导致论坛运行速度下降。<br />所以如果你不知道清理缓存意味着什么，请不要进行此操作。',
-	'Refresh_All_Cache' => '更新全站缓存',
-
-	'Successfully_Refreshed' => '缓存更新成功',
 	'Basic_Settings_Successfully_Saved' => '基本设置修改成功，{{NewConfig}}项已修改',
 	'Page_Settings_Successfully_Saved' => '页面设置修改成功，{{NewConfig}}项已修改',
 	'Parameter_Settings_Successfully_Saved' => '参数设置修改成功，{{NewConfig}}项已修改',
-	'Oauth_Settings_Successfully_Saved' => 'oAuth设置修改成功',
 	'Advanced_Settings_Successfully_Saved' => '高级设置修改成功，{{NewConfig}}项已修改',
 	));

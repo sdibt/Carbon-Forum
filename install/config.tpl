@@ -14,20 +14,14 @@ if (!defined('InternalAccess')) exit('error: 403 Access Denied');
 来防止模板文件被游客访问
 */
 define('ForumLanguage', '{{Language}}');
-//MemCache(d) / Redis
-define('EnableMemcache', {{EnableMemcache}});
-define('MemCacheHost', 'localhost');
-define('MemCachePort', 11211);//Memcache: 11211, Redis: 6379
-define('MemCachePrefix', '{{MemCachePrefix}}');
+
 //Database
 define('DBHost', '{{DBHost}}');
 define('DBPort', '3306');
 define('DBName', '{{DBName}}');
 define('DBUser', '{{DBUser}}');
 define('DBPassword', '{{DBPassword}}');
-//Sphinx Server
-define('SearchServer', '{{SearchServer}}');
-define('SearchPort', '{{SearchPort}}');
+
 
 define('LanguagePath', __DIR__ . '/language/' . ForumLanguage . '/');
 define('LibraryPath', __DIR__ . '/library/');

@@ -77,55 +77,6 @@ if (!empty($Temp)) {
 unset($Temp);
 $SearchConditionQuery = implode(' AND ', $SearchCondition);
 
-//如果定义了搜索服务器，并且不是高级搜索，就走搜索服务
-if (defined('SearchServer') && SearchServer && !$AdvancedSearch) {
-	require(LibraryPath . 'SearchClient.class.php');
-	try {
-		$finds = SearchClient::searchLike($Keyword, 'PostsIndexes' //关键字及索引
-			, ($Page - 1) * $Config['TopicsPerPage'], ($Config['TopicsPerPage'] +1)
-			, "" //过滤条件
-			, 'PostTime desc' //排序规则
-		);
-		if (!empty($finds)) {
-			$num     = $finds[1];
-			$PostIdList = isset($finds[0]['id']) ? $finds[0]['id'] : null;
-			if (count($PostIdList) > 0) {
-				$TopicsArray = $DB->query('SELECT 				
-						t.`ID`,
-						t.`Topic`,
-						t.`Tags`,
-						t.`LastName`,
-						t.`Replies`,
-						p.`UserID`,
-						p.`UserName`,
-						p.`Content`,
-						p.`ID` AS PostID,
-						p.`PostTime` AS LastTime
-					FROM ' . PREFIX . 'topics  t, ' . PREFIX . 'posts p 
-					WHERE t.ID=p.TopicID and p.ID in (?) and t.IsDel=0 
-					ORDER BY p.PostTime DESC', $PostIdList);
-				foreach ($TopicsArray as &$row) {
-					$excerpts          = SearchClient::callProxy('buildExcerpts', array(
-						array(
-							$row['Topic'],
-							$row['Content']
-						),
-						'PostsIndexes',
-						$Keyword,
-						array(
-							"before_match" => '<span class="search-keyword">',
-							"after_match" => "</span>"
-						)
-					));
-					$row['MinContent'] = $excerpts[1];
-				}
-			}
-		}
-	}
-	catch (Exception $e) {
-		$Error = $e->getMessage();
-	}
-} else {
 	if ($PostsSearch) {
 		$SearchFields = 'SELECT 
 				t.`ID`,
@@ -154,7 +105,6 @@ if (defined('SearchServer') && SearchServer && !$AdvancedSearch) {
 				$Topic['MinContent'] = strip_tags(mb_substr($Topic['Content'], 0, 300, 'utf-8'),'<p><br>');
 			}
 		}
-}
 
 $DB->CloseConnection();
 

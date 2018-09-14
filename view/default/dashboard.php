@@ -46,8 +46,6 @@ function GenerateSelect($Options, $Name)
 		<li><?php echo $Lang['Page_Settings']; ?></li>
 		<li><?php echo $Lang['Advanced_Settings']; ?></li>
 		<li><?php echo $Lang['Parameter_Settings']; ?></li>
-		<li><?php echo $Lang['Oauth_Settings']; ?></li>
-		<li><?php echo $Lang['Refresh_Cache']; ?></li>
 		<li><?php echo $Lang['Recycle_Bin']; ?></li>
 	</ul>
 	<div class="resp-tabs-container">
@@ -257,19 +255,19 @@ function GenerateSelect($Options, $Name)
 						</td>
 					</tr>
 					<tr>
-						<td width="200" align="right"><?php echo $Lang['Main_Domainname']; ?><br>(www.94cb.com)</td>
+						<td width="200" align="right"><?php echo $Lang['Main_Domainname']; ?></td>
 						<td width="auto" align="left">
 							<input type="text" class="w600" name="MainDomainName" value="<?php echo $Config['MainDomainName']; ?>"/>
 						</td>
 					</tr>
 					<tr>
-						<td width="200" align="right"><?php echo $Lang['Mobile_Domainname']; ?><br>(m.94cb.com)</td>
+						<td width="200" align="right"><?php echo $Lang['Mobile_Domainname']; ?></td>
 						<td width="auto" align="left">
 							<input type="text" class="w600" name="MobileDomainName" value="<?php echo $Config['MobileDomainName']; ?>"/>
 						</td>
 					</tr>
 					<tr>
-						<td width="200" align="right"><?php echo $Lang['API_Domainname']; ?><br>(api.94cb.com)</td>
+						<td width="200" align="right"><?php echo $Lang['API_Domainname']; ?></td>
 						<td width="auto" align="left">
 							<input type="text" class="w600" name="AppDomainName" value="<?php echo $Config['AppDomainName']; ?>"/>
 						</td>
@@ -286,39 +284,6 @@ function GenerateSelect($Options, $Name)
 								'235 seconds' => '235',
 								'280 seconds' => '280'
 							), 'PushConnectionTimeoutPeriod'); ?>
-						</td>
-					</tr>
-					<tr>
-						<td width="200" align="right"><?php echo $Lang['SMTP_Host']; ?><br>(smtp1.example.com)</td>
-						<td width="auto" align="left">
-							<input type="text" class="w600" name="SMTPHost" value="<?php echo $Config['SMTPHost']; ?>"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="200" align="right"><?php echo $Lang['SMTP_Port']; ?><br>(587)</td>
-						<td width="auto" align="left">
-							<input type="text" class="w600" name="SMTPPort" value="<?php echo $Config['SMTPPort']; ?>"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="200" align="right"><?php echo $Lang['SMTP_Auth']; ?></td>
-						<td width="auto" align="left">
-							<?php echo GenerateSelect(array(
-								$Lang['Yes'] => 'true',
-								$Lang['No'] => 'false'
-							), 'SMTPAuth'); ?>
-						</td>
-					</tr>
-					<tr>
-						<td width="200" align="right"><?php echo $Lang['SMTP_Username']; ?><br>(user@example.com)</td>
-						<td width="auto" align="left">
-							<input type="text" class="w600" name="SMTPUsername" value="<?php echo $Config['SMTPUsername']; ?>"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="200" align="right"><?php echo $Lang['SMTP_Password']; ?><br>(your_password)</td>
-						<td width="auto" align="left">
-							<input type="password" class="w600" name="SMTPPassword" value="<?php echo $Config['SMTPPassword']; ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -369,59 +334,6 @@ function GenerateSelect($Options, $Name)
 					</tr>
 					</tbody>
 				</table>
-			</form>
-		</div>
-		<div>
-			<p class="red text-center"><?php echo $OauthMessage; ?></p>
-			<form method="post" action="<?php echo $Config['WebsitePath']; ?>/dashboard#dashboard5">
-				<input type="hidden" name="Action" value="AddOauth"/>
-				<?php
-				foreach ($OauthConfig as $Key => $Value) {
-					$OauthDataExist = isset($OauthData[$Key]);
-					?>
-					<p>
-						<input type="text" name="AppName[]" value="<?php echo $Key; ?>" class="w100"
-							   readonly="readonly"/>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="AppKey[]"
-							   value="<?php echo $OauthDataExist ? $OauthData[$Key]['AppKey'] : '';; ?>" class="w100"
-							   placeholder="<?php echo $Lang['App_Key']; ?>"/>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="AppSecret[]"
-							   value="<?php echo $OauthDataExist ? $OauthData[$Key]['AppSecret'] : ''; ?>" class="w200"
-							   placeholder="<?php echo $Lang['App_Secret']; ?>"/>
-						<?php
-						if ($OauthDataExist && $Config['MainDomainName']) {
-							?>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<?php echo $Lang['Callback_URL']; ?>: <input type="text"
-																		 value="<?php echo $CurProtocol . $Config['MainDomainName'] . $Config['WebsitePath']; ?>/oauth-<?php echo $OauthData[$Key]['ID']; ?>;<?php echo $CurProtocol . $Config['MobileDomainName'] . $Config['WebsitePath']; ?>/oauth-<?php echo $OauthData[$Key]['ID']; ?>"
-																		 class="w200" readonly="readonly"/>
-							<?php
-						}
-						?>
-					</p>
-					<?php
-				}
-				?>
-				<div class="div-align"><input type="submit" value="<?php echo $Lang['Save']; ?>" name="submit"
-											  class="textbtn"/></div>
-			</form>
-		</div>
-		<div>
-			<p class="red text-center"><?php echo $CacheMessage; ?></p>
-			<p class="grey text-center"><?php echo $Lang['Refresh_Cache_Notice']; ?></p>
-			<form method="post" action="<?php echo $Config['WebsitePath']; ?>/dashboard#dashboard6">
-				<input type="hidden" name="Action" value="Cache"/>
-				<div class="div-align"><input type="submit" value="<?php echo $Lang['Refresh_All_Cache']; ?>"
-											  name="submit" class="textbtn"/></div>
-			</form>
-			<p></p>
-			<form method="post" action="<?php echo $Config['WebsitePath']; ?>/dashboard#dashboard6">
-				<input type="hidden" name="Action" value="Statistics"/>
-				<div class="div-align">
-					<input type="submit" value="<?php echo $Lang['Refresh_All_Cache']; ?>(<?php echo $Lang['Statistics']; ?>)" name="submit" class="textbtn"/>
-				</div>
 			</form>
 		</div>
 		<div>

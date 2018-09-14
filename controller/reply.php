@@ -128,16 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					$DB->query('UPDATE `' . PREFIX . 'users` SET `NewReply` = `NewReply`+1 WHERE ID = :UserID', array(
 						'UserID' => $Topic['UserID']
 					));
-					//清理内存缓存
-					if ($MCache) {
-						$MCache->delete(MemCachePrefix . 'UserInfo_' . $Topic['UserID']);
-					}
-				}
-				if ($MCache) {
-					//清理首页内存缓存
-					$MCache->delete(MemCachePrefix . 'Homepage');
-					//清理主题缓存
-					$MCache->delete(MemCachePrefix . 'Topic_' . $TopicID);
+
 				}
 				//跳转到主题页
 				//计算页数，跳转到准确页数

@@ -25,23 +25,7 @@ if($Error){
 			<br style="clear:both" />
 		</p>
 		<p>
-			<a href="<?php echo $Config['WebsitePath']; ?>/register" class="button"><?php echo $Lang['Sign_Up']; ?></a>
 			<input type="submit" class="button" value="<?php echo $Lang['Log_In']; ?>" name="submit" style="float:right;" />
-		</p>
-		<p>
-<?php
-$OauthData = json_decode($Config['CacheOauth'], true);
-$OauthData = $OauthData?$OauthData:array();
-foreach ($OauthData as $Value) {
-if ($Value['AppKey']) {
-?>
-		<a href="<?php echo $Config['WebsitePath']; ?>/oauth-<?php echo $Value['ID']; ?>" data-ignore="True">
-			<img src="<?php echo $Config['WebsitePath'] . $Value['ButtonImageUrl']; ?>" alt="<?php echo $Value['Alias'] . ' ' . $Lang['Log_In']; ?>" />
-		</a>&nbsp;&nbsp;
-<?php
-}
-}
-?>
 		</p>
 	</div>
 </form>

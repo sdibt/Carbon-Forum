@@ -60,7 +60,6 @@ if($CurUserID){
 ?>
 	<li class="divider"><?php echo $Lang['Log_In']; ?></li>
 	<li><a class="icon new" href="javascript:$('#LoginViewCancelButton').text(Lang['Cancel']);$.afui.loadContent('#LoginPanel', false, false, 'up-reveal',$('#mainview'));"><?php echo $Lang['Log_In']; ?></a></li>
-	<li><a class="icon new" href="<?php echo $Config['WebsitePath']; ?>/register" data-transition="slide"><?php echo $Lang['Sign_Up']; ?></a></li>
 <?php
 }
 if( $Config['MobileDomainName'] ){

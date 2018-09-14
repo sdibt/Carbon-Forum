@@ -36,7 +36,6 @@ if (method_exists($Manage, $ManageMethod)) {
 	$Message = $Manage->message;
 }
 /**
- * @property MemcacheMod mCache
  * @property DB db
  */
 class Manage
@@ -46,18 +45,16 @@ class Manage
 	private $db;
 	private $lang;
 	private $config;
-	private $mCache;
 	public $message = '';
 
 	public function __construct($id, $action)
 	{
-		global $DB, $Lang, $Config, $MCache;
+		global $DB, $Lang, $Config;
 		$this->id     = $id;
 		$this->action = $action;
 		$this->db     = $DB;
 		$this->lang   = $Lang;
 		$this->config = $Config;
-		$this->mCache = $MCache;
 	}
 
 	// 获取要管理的项目的信息
@@ -96,17 +93,6 @@ class Manage
 				AlertMsg('Bad Request', 'Bad Request');
 				return [];
 				break;
-		}
-	}
-
-	//清理主题缓存
-	private function refreshTopicCache()
-	{
-		if ($this->mCache) {
-			//清理首页内存缓存
-			$this->mCache->delete(MemCachePrefix . 'Homepage');
-			//清理主题缓存
-			$this->mCache->delete(MemCachePrefix . 'Topic_' . $this->id);
 		}
 	}
 
@@ -164,7 +150,6 @@ class Manage
 		} else {
 			AlertMsg('Bad Request', $this->lang['Deleted']);
 		}
-		$this->refreshTopicCache();
 	}
 
 	// 从回收站恢复主题
@@ -192,7 +177,6 @@ class Manage
 		} else {
 			AlertMsg('Bad Request', $this->lang['Failure_Recovery']);
 		}
-		$this->refreshTopicCache();
 	}
 
 	// 永久删除主题
@@ -222,7 +206,6 @@ class Manage
 		} else {
 			AlertMsg('Bad Request', $this->lang['Failure_Permanent_Deletion']);
 		}
-		$this->refreshTopicCache();
 	}
 
 	// 主题下沉
@@ -233,7 +216,6 @@ class Manage
 			"ID" => $this->id
 		));
 		$this->message = $this->lang['Sunk'];
-		$this->refreshTopicCache();
 	}
 
 	// 主题上浮
@@ -244,7 +226,6 @@ class Manage
 			"ID" => $this->id
 		));
 		$this->message = $this->lang['Risen'];
-		$this->refreshTopicCache();
 	}
 
 	//锁定 / 解锁主题
@@ -256,7 +237,6 @@ class Manage
 			"IsLocked" => $TopicInfo['IsLocked'] ? 0 : 1
 		));
 		$this->message = $TopicInfo['IsLocked'] ? $this->lang['Lock'] : $this->lang['Unlock'];
-		$this->refreshTopicCache();
 	}
 
 	//给帖子删除话题
@@ -284,7 +264,6 @@ class Manage
 		} else {
 			AlertMsg('Bad Request', 'Bad Request');
 		}
-		$this->refreshTopicCache();
 	}
 
 	// 给主题添加话题
@@ -347,7 +326,6 @@ class Manage
 		} else {
 			AlertMsg('Bad Request', 'Bad Request');
 		}
-		$this->refreshTopicCache();
 	}
 
 	// 删除帖子
@@ -580,10 +558,6 @@ class Manage
 				default:
 					AlertMsg('Bad Request', 'Bad Request');
 					break;
-			}
-			//清理内存缓存
-			if ($this->mCache) {
-				$this->mCache->delete(MemCachePrefix . 'UserInfo_' . $CurUserID);
 			}
 			$this->message = $IsFavorite ? ($MessageType ? $this->lang['Follow'] : $this->lang['Collect']) : ($MessageType ? $this->lang['Unfollow'] : $this->lang['Unsubscribe']);
 			//$FavoriteID = $this->db->lastInsertId();

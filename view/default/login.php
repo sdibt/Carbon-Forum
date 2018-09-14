@@ -46,25 +46,6 @@ if (!defined('InternalAccess')) exit('error: 403 Access Denied');
 					<tr>
 						<td width="180" align="right"></td>
 						<td width="auto" align="left"><input type="submit" value="<?php echo $Lang['Log_In']; ?>" name="submit" class="textbtn" />&nbsp;&nbsp;&nbsp;&nbsp;
-							<a href="<?php echo $Config['WebsitePath']; ?>/register"><?php echo $Lang['Sign_Up']; ?></a>&nbsp;&nbsp;&nbsp;&nbsp;
-							<a href="<?php echo $Config['WebsitePath']; ?>/forgot"><?php echo $Lang['Forgot_Password']; ?></a>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2" width="auto" align="center">
-<?php
-$OauthData = json_decode($Config['CacheOauth'], true);
-$OauthData = $OauthData?$OauthData:array();
-foreach ($OauthData as $Value) {
-	if ($Value['AppKey']) {
-?>
-							<a href="<?php echo $Config['WebsitePath']; ?>/oauth-<?php echo $Value['ID']; ?>">
-								<img src="<?php echo $Config['WebsitePath'] . $Value['ButtonImageUrl']; ?>" alt="<?php echo $Value['Alias'] . ' ' . $Lang['Log_In']; ?>" />
-							</a>&nbsp;&nbsp;
-<?php
-	}
-}
-?>
 						</td>
 					</tr>
 				</tbody>

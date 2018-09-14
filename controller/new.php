@@ -243,10 +243,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				}
 				//添加提醒消息
 				AddingNotifications($Content, $TopicID, $PostID);
-				//清理首页内存缓存
-				if ($MCache) {
-					$MCache->delete(MemCachePrefix . 'Homepage');
-				}
 				//跳转到主题页
 				//Redirect('t/'.$TopicID);
 			}

@@ -6,16 +6,6 @@ $UpdateUserInfoMessage = '';
 $ChangePasswordMessage = '';
 $DoNotNeedOriginalPassword = (stripos($CurUserInfo['Password'], 'zzz')===0);
 
-$CurUserOauthData = $DB->query('SELECT * FROM ' . PREFIX . 'app_users 
-	WHERE UserID=?', array($CurUserID));
-
-$TemporaryOauthData = json_decode($Config['CacheOauth'], true);
-$TemporaryOauthData = $TemporaryOauthData?$TemporaryOauthData:array();
-$OauthData = array();
-foreach ($TemporaryOauthData as $Value) {
-	$OauthData[$Value['ID']] = $Value;
-}
-unset($TemporaryOauthData);
 // $DoNotNeedOriginalPassword === True表示该用户为oAuth登陆用户，修改密码不需要原密码
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -57,48 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 			
 			break;
-		
-		case 'ChangePassword':
-			$OriginalPassword = Request('Post', 'OriginalPassword');
-			$NewPassword      = Request('Post', 'NewPassword');
-			$NewPassword2     = Request('Post', 'NewPassword2');
-			if (($OriginalPassword || $DoNotNeedOriginalPassword) && $NewPassword && $NewPassword2) {
-				if ($NewPassword == $NewPassword2) {
-					if (md5(md5($OriginalPassword) . $CurUserInfo['Salt']) === $CurUserInfo['Password'] || $DoNotNeedOriginalPassword) {
-						if ($OriginalPassword != $NewPassword || $DoNotNeedOriginalPassword) {
-							//$NewSalt = mt_rand(100000,999999);
-							//修改Salt会导致密码问题出错
-							$NewSalt         = $CurUserInfo['Salt'];
-							$NewPasswordHash = md5(md5($NewPassword) . $NewSalt);
-							if (UpdateUserInfo(array(
-								//'Salt' => $NewSalt,
-								'Password' => $NewPasswordHash
-							))) {
-								$TemporaryUserExpirationTime = 30 * 86400 + $TimeStamp;//默认保持30天登陆状态
-								SetCookies(array(
-									'UserExpirationTime' => $TemporaryUserExpirationTime,
-									'UserCode' => md5($NewPasswordHash . $NewSalt . $TemporaryUserExpirationTime . SALT)
-								), 30);
-								$CurUserInfo['Salt']     = $NewSalt;
-								$CurUserInfo['Password'] = $NewPasswordHash;
-								$ChangePasswordMessage   = $Lang['Change_Password_Success'];
-							} else {
-								$ChangePasswordMessage = $Lang['Change_Password_Failure'];
-							}
-						} else {
-							$ChangePasswordMessage = $Lang['Password_Do_Not_Modify'];
-						}
-					} else {
-						$ChangePasswordMessage = $Lang['Current_Password_Is_Uncorrect'];
-					}
-				} else {
-					$ChangePasswordMessage = $Lang['Passwords_Inconsistent'];
-				}
-			} else {
-				$ChangePasswordMessage = $Lang['Forms_Can_Not_Be_Empty'];
-			}
-			break;
-		
 		default:
 			# code...
 			break;
