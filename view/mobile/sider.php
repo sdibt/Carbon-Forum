@@ -51,15 +51,6 @@ if($CurUserID){
 			<?php echo $Lang['Users_Followed']; ?>(<?php echo $CurUserInfo['NumFavUsers']; ?>)
 		</a>
 	</li>
-
-	<li>
-		<a class="icon close" href="<?php echo $Config['WebsitePath']; ?>/login?logout=<?php echo $CurUserCode; ?>" data-ignore="True"><?php echo $Lang['Log_Out']; ?></a>
-	</li>
-<?php
-}elseif( $UrlPath!='login' ){
-?>
-	<li class="divider"><?php echo $Lang['Log_In']; ?></li>
-	<li><a class="icon new" href="javascript:$('#LoginViewCancelButton').text(Lang['Cancel']);$.afui.loadContent('#LoginPanel', false, false, 'up-reveal',$('#mainview'));"><?php echo $Lang['Log_In']; ?></a></li>
 <?php
 }
 if( $Config['MobileDomainName'] ){

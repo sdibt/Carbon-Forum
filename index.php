@@ -46,8 +46,6 @@ $Routes['POST']['/inbox/(?<inbox_id>.*?)']                                      
 $Routes['DELETE']['/inbox/(?<inbox_id>.*?)/delete/(?<message_id>[0-9]+)']                  = 'inbox_delete';
 $Routes['POST']['/json/(?<action>[0-9a-z_\-]+)']                                           = 'json';
 $Routes['GET']['/json/(?<action>[0-9a-z_\-]+)']                                            = 'json';
-$Routes['GET']['/login']                                                                   = 'login';
-$Routes['POST']['/login']                                                                  = 'login';
 $Routes['POST']['/manage']                                                                 = 'manage';
 $Routes['GET']['/new']                                                                     = 'new';
 $Routes['POST']['/new']                                                                    = 'new';

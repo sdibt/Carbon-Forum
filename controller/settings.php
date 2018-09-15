@@ -3,8 +3,6 @@ require(LanguagePath . 'settings.php');
 Auth(1);
 $UploadAvatarMessage   = '';
 $UpdateUserInfoMessage = '';
-$ChangePasswordMessage = '';
-$DoNotNeedOriginalPassword = (stripos($CurUserInfo['Password'], 'zzz')===0);
 
 // $DoNotNeedOriginalPassword === True表示该用户为oAuth登陆用户，修改密码不需要原密码
 

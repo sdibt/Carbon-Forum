@@ -110,42 +110,6 @@ if($CurUserID){
 	GetNotification();
 	</script>
 <?php
-}elseif( $UrlPath!='login' ){
-?>
-	<div class="view" id="LoginView">
-		<div class="pages">
-			<div class="panel" id="LoginPanel">
-				<p>
-					<br />
-					<h1><?php echo $Lang['Log_In']; ?></h1>
-					<br />
-				</p>
-				<form action="<?php echo $Config['WebsitePath']; ?>/login" method="post" onsubmit="JavaScript:this.Password.value=md5(this.Password.value);">
-					<div class="input-group">
-						<input type="hidden" value="<?php echo $RequestURI; ?>" name="ReturnUrl" id="ReturnUrl" />
-						<input type="hidden" name="FormHash" value="<?php echo $FormHash; ?>" />
-						<input type="hidden" name="Expires" value="30" />
-						<p>
-						<input type="text" name="UserName" id="UserName" placeholder="<?php echo $Lang['UserName']; ?>" value="" />
-						</p>
-						<p>
-						<input type="password" name="Password" id="Password" placeholder="<?php echo $Lang['Password']; ?>" value="" />
-						</p>
-						<p>
-							<input type="text" name="VerifyCode" id="VerifyCode" placeholder="<?php echo $Lang['Verification_Code']; ?>" onclick="document.getElementById('Verification_Code_Img').src='<?php echo $Config['WebsitePath']; ?>/seccode.php';" value="" placeholder="<?php echo $Lang['Verification_Code']; ?>" style="width:66%;"/>
-							<img src="" id="Verification_Code_Img" style="cursor: pointer;" onclick="this.src+=''" style="width:33%;" align="middle" />
-							<br style="clear:both" />
-						</p>
-						<p>
-							<input type="submit" class="button" value="<?php echo $Lang['Log_In']; ?>" name="submit" style="float:right;" />
-						</p>
-						<p><a class="button block" href="#main" data-transition="up-reveal:dismiss" id="LoginViewCancelButton"></a></p>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-<?php
 }
 ?>
 </body>

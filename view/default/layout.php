@@ -181,14 +181,12 @@ if(!$IsAjax){
 					<a href="<?php echo $Config['WebsitePath']; ?>/tags/following"<?php echo $UrlPath == 'favorite_tags' ? ' class="buttons-active"' : ''; ?>><?php echo $Lang['Tags_Followed']; ?></a> -->
 						<a href="<?php echo $Config['WebsitePath']; ?>/new"<?php echo $UrlPath == 'new' ? ' class="buttons-active"' : ''; ?>><?php echo $Lang['Create_New_Topic']; ?></a>
 						<?php
-					} else {
-						?>
-						<a href="<?php echo $Config['WebsitePath']; ?>/login"<?php echo $UrlPath == 'login' ? ' class="buttons-active"' : ''; ?>>
-							<?php echo $Lang['Log_In']; ?>
-						</a>
-						<?php
 					}
-					?>
+						?>
+                    <a href="/JudgeOnline">
+                        返回OJ
+                    </a>
+
 					<!--a href="<?php echo $Config['WebsitePath']; ?>/explore"<?php echo $UrlPath == 'explore' ? ' class="buttons-active"' : ''; ?>>发现</a-->
 					<a href="<?php echo $Config['WebsitePath']; ?>/"<?php echo $UrlPath == 'home' ? ' class="buttons-active"' : ''; ?>>
 						<?php echo $Lang['Home']; ?>

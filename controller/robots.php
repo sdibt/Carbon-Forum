@@ -7,7 +7,6 @@ Disallow: <?php echo $Config['WebsitePath']; ?>/favorites/
 Disallow: <?php echo $Config['WebsitePath']; ?>/forgot
 Disallow: <?php echo $Config['WebsitePath']; ?>/goto/
 Disallow: <?php echo $Config['WebsitePath']; ?>/json/
-Disallow: <?php echo $Config['WebsitePath']; ?>/login
 Disallow: <?php echo $Config['WebsitePath']; ?>/manage
 Disallow: <?php echo $Config['WebsitePath']; ?>/new
 Disallow: <?php echo $Config['WebsitePath']; ?>/notifications
