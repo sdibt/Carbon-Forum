@@ -39,6 +39,7 @@
 /library/Uploader.config.json
 /library/Filtering.words.config.json
 /upload
+.idea/*
 
 #These files will be created automatically after install
 /.htaccess
