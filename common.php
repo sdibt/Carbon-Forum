@@ -769,6 +769,10 @@ $CurUserCode = GetCookie('UserCode');
 
 session_start();
 
+if (OJ_VIP_CONTEST && !isset($_SESSION['administrator'])) {
+    AlertMsg("功能限制", "考试期间不能使用论坛功能", 403);
+}
+
 // 如果已经登录
 if (isset($_SESSION['user_id'])) {
     // 做二次验证
