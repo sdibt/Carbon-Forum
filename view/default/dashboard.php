@@ -267,12 +267,6 @@ function GenerateSelect($Options, $Name)
 						</td>
 					</tr>
 					<tr>
-						<td width="200" align="right"><?php echo $Lang['API_Domainname']; ?></td>
-						<td width="auto" align="left">
-							<input type="text" class="w600" name="AppDomainName" value="<?php echo $Config['AppDomainName']; ?>"/>
-						</td>
-					</tr>
-					<tr>
 						<td width="200" align="right"><?php echo $Lang['Push_Connection_Timeout_Period']; ?></td>
 						<td width="auto" align="left">
 							<?php echo GenerateSelect(array(

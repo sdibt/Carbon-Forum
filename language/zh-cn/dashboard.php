@@ -46,7 +46,6 @@ $Lang = array_merge($Lang, array(
 	'jQuery_CDN' => 'jQuery库地址',
 	'Main_Domainname' => 'PC端主站域名',
 	'Mobile_Domainname' => '手机站域名',
-	'API_Domainname' => '客户端API域名',
 
 	'Push_Connection_Timeout_Period' => '推送超时时间<br />(如果你不知道这是什么请不要修改)',
 

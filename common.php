@@ -684,7 +684,7 @@ if ($UserAgent) {
     $IsSpider = false;
     $IsMobile = false;
 }
-$IsApp = $_SERVER['HTTP_HOST'] == $Config['AppDomainName'] ? true : false;
+$IsApp = false;
 /* Set current template
  * default: PC Version
  * mobile: Mobile Version

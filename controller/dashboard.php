@@ -95,9 +95,6 @@ switch ($Action) {
 			if ($NewConfig['MobileDomainName'] == $_SERVER['HTTP_HOST']) {
 				$NewConfig['MobileDomainName'] = $Config['MobileDomainName'];
 			}
-			if ($NewConfig['AppDomainName'] == $_SERVER['HTTP_HOST']) {
-				$NewConfig['AppDomainName'] = $Config['AppDomainName'];
-			}
 		}
 		foreach ($NewConfig as $Key => $Value) {
 			if (!array_key_exists($Key, $Config) || $Value == $Config[$Key]) {
