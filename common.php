@@ -46,7 +46,8 @@ if (!$Config) {
     }
 }
 // 热门标签列表
-$HotTagsArray = array();
+$HotTagsArray = json_decode($Config['CacheHotTags'], true);
+$HotTagsArray = $HotTagsArray ? $HotTagsArray : array();
 
 $PHPSelf = addslashes(htmlspecialchars($_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME']));
 $UrlPath = '';

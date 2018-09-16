@@ -13,13 +13,12 @@ $TypeList         = array(
 	4 => 'favorite',
 	5 => 'tag'
 );
-//FavoriteType: 1:Topic 2:Tag 3:User 4:Post 5:Blog
+//FavoriteType: 1:Topic 2:Tag 3:User 4:Post
 $FavoriteTypeList = array(
 	1 => 'Topic',
 	2 => 'Tag',
 	3 => 'User',
-	4 => 'Post',
-	5 => 'Blog'
+	4 => 'Post'
 );
 
 $Manage = new Manage($ID, $Action);
@@ -458,11 +457,6 @@ class Manage
 		$this->favorite($IsFavorite, 'Post');
 	}
 
-	public function favoriteBlog($IsFavorite)
-	{
-		$this->favorite($IsFavorite, 'Blog');
-	}
-
 	//关注 / 收藏功能
 	private function favorite($IsFavorite, $FavoriteType)
 	{
@@ -472,7 +466,7 @@ class Manage
 		$MessageType = false; //false表示收藏，true表示关注
 		$SQLAction   = intval($IsFavorite) ? '-1' : '+1';
 		switch ($FavoriteType) {
-			//1:Topic 2:Tag 3:User 4:Post 5:Blog
+			//1:Topic 2:Tag 3:User 4:Post
 			case 'Topic': //Topic
 				$Title = $this->db->single("SELECT Topic FROM " . PREFIX . "topics WHERE ID=:FavoriteID", array(
 					'FavoriteID' => $this->id
@@ -492,11 +486,6 @@ class Manage
 				break;
 			case 'Post': //Post
 				$Title = $this->db->single("SELECT Subject FROM " . PREFIX . "posts WHERE ID=:FavoriteID", array(
-					'FavoriteID' => $this->id
-				));
-				break;
-			case 'Blog': //Blog
-				$Title = $this->db->single("SELECT Subject FROM " . PREFIX . "blogs WHERE ID=:FavoriteID and ParentID=0", array(
 					'FavoriteID' => $this->id
 				));
 				break;
@@ -526,7 +515,7 @@ class Manage
 				));
 			}
 			switch ($FavoriteType) {
-				//1:Topic 2:Tag 3:User 4:Post 5:Blog
+				//1:Topic 2:Tag 3:User 4:Post
 				case 'Topic': //Topic
 					$this->db->query('UPDATE ' . PREFIX . 'topics SET Favorites = Favorites' . $SQLAction . ' WHERE ID=:FavoriteID', array(
 						'FavoriteID' => $this->id
@@ -552,8 +541,6 @@ class Manage
 					));
 					break;
 				case 'Post': //Post
-					break;
-				case 'Blog': //Blog
 					break;
 				default:
 					AlertMsg('Bad Request', 'Bad Request');
