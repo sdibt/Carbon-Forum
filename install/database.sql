@@ -286,22 +286,6 @@ CREATE TABLE `carbon_users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for carbon_vote
--- ----------------------------
-DROP TABLE IF EXISTS `carbon_vote`;
-CREATE TABLE `carbon_vote` (
-  `TopicID` int(10) unsigned NOT NULL DEFAULT '0',
-  `Type` tinyint(1) unsigned DEFAULT '0',
-  `Expiry` int(10) unsigned NOT NULL,
-  `Items` longtext CHARACTER SET utf8,
-  `Result` longtext CHARACTER SET utf8,
-  `BallotUserList` longtext CHARACTER SET utf8,
-  `BallotIPList` longtext CHARACTER SET utf8,
-  `BallotItemsList` longtext CHARACTER SET utf8,
-  PRIMARY KEY (`TopicID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
 -- Records of carbon_config
 -- ----------------------------
 INSERT INTO `carbon_config` VALUES ('AllowEditing', 'true');

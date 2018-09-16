@@ -183,7 +183,7 @@ if(!$IsAjax){
 						<?php
 					}
 						?>
-                    <a href="/JudgeOnline">
+                    <a href="/JudgeOnline/">
                         返回OJ
                     </a>
 
