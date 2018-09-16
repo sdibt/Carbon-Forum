@@ -769,12 +769,21 @@ $CurUserCode = GetCookie('UserCode');
 
 session_start();
 
+// 做二次验证
+if ($CurUserID) {
+    $_userInfo = $DB->row("SELECT UserName FROM " . PREFIX . "users WHERE ID = :ID", array(
+        "ID" => $CurUserID
+    ));
+    if ($_userInfo['UserName'] != $_SESSION['user_id']) {
+        $CurUserID = 0;
+        LogOut();
+    }
+}
+
 // 如果已经登录
 if (isset($_SESSION['user_id'])) {
     // 判断是否有 cookie, 有的话就直接
-    if ($CurUserID) {
-
-    } else {
+    if (!$CurUserID) {
         // 如果没有 cookie, 查一下表里有没有这个人的信息, 没有的话创建一条数据
         $_userInfo = $DB->row("SELECT ID,UserName,Salt,Password,UserRoleID,UserMail,UserIntro FROM " . PREFIX . "users WHERE UserName = :UserName", array(
             "UserName" => $_SESSION['user_id']

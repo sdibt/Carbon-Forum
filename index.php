@@ -59,8 +59,6 @@ $Routes['GET']['/register']                                                     
 $Routes['POST']['/register']                                                               = 'register';
 $Routes['GET']['/reply']                                                                   = 'reply';
 $Routes['POST']['/reply']                                                                  = 'reply';
-$Routes['GET']['/reset_password/(?<access_token>.*?)']                                     = 'reset_password';
-$Routes['POST']['/reset_password/(?<access_token>.*?)']                                    = 'reset_password';
 $Routes['GET']['/robots.txt']                                                              = 'robots';
 $Routes['GET']['/search.xml']                                                              = 'open_search';
 $Routes['GET']['/search/(?<keyword>.*?)(/page/(?<page>[0-9]*))?']                          = 'search';
