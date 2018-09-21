@@ -67,10 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 		$Content = $ContentFilterResult['Content'];
 
-		if(!ckeckUserIsInList($CurUserID, $whiteList) && !isset($_SESSION['administrator'])) {
-            echo "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
-            echo "<script>function myTips(){alert('You don\'t be allowed to reply!\\nPlease contact with admin');}</script>";
-            echo "</head><body onload='myTips()'></body></html>";
+
+		if(false === ckeckUserIsInList($CurUserName, $whiteList) && !isset($_SESSION['administrator'])) {
+            $Error = "You don\'t be allowed to reply!\\nPlease contact with admin";
+            break;
         }
 
 		try {

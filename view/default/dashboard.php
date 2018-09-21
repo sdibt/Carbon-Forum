@@ -324,11 +324,7 @@ function GenerateSelect($Options, $Name)
                         <td width="200" align="right"><?php echo $Lang['White_User_List_Parameter']; ?></td>
                         <td width="auto" align="left">
 							<textarea class="w600 h320" name="UploadWhiteUserListParameter"><?php
-                                if (is_file(LibraryPath . 'WhiteUserList.config.json')) {
-                                    echo CharCV(file_get_contents(LibraryPath . 'WhiteUserList.config.json'));
-                                } else {
-                                    echo CharCV(file_get_contents(LibraryPath . 'WhiteUserList.config.template.json'));
-                                }
+                                if (!is_null($whiteList)) foreach ($whiteList as $item) echo $item . "\n";
                                 ?></textarea>
                         </td>
                     </tr>

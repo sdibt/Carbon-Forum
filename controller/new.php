@@ -70,6 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 			break;	
 		}
+        if(false === ckeckUserIsInList($CurUserName, $whiteList) && !isset($_SESSION['administrator'])) {
+            $Error = "You don\'t be allowed to reply!\\nPlease contact with admin";
+            break;
+        }
 
 		$Title = $TitleFilterResult['Content'];
 		$Content = $ContentFilterResult['Content'];

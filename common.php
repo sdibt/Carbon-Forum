@@ -679,11 +679,19 @@ function getWhiteList() {
     $file = LibraryPath . 'WhiteUserList.config.json';
     global $whiteList;
     $whiteList = array();
-    getList($file, $whiteList);
+    if (is_file($file)) {
+        getList($file, $whiteList);
+    } else {
+        getList(LibraryPath . 'WhiteUserList.config.template.json', $whiteList);
+    }
+
 }
 
 function getList($path, &$listName) {
-    $listName = json_decode(file_get_contents($path), true);
+    if (is_file($path)) {
+        $listName = JsonDecode(file_get_contents($path));
+    }
+
 }
 
 function saveWhiteList($list) {
