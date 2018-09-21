@@ -338,13 +338,6 @@ function GenerateSelect($Options, $Name)
 				</table>
 			</form>
 		</div>
-        <div>
-            <form method="get" action="<?php echo $Config['WebsitePath']; ?>/recycle-bin">
-                <div class="div-align">
-                    <input type="submit" value="<?php echo $Lang['Recycle_Bin']; ?>" name="submit" class="textbtn"/>
-                </div>
-            </form>
-        </div>
 		<div>
 			<form method="get" action="<?php echo $Config['WebsitePath']; ?>/recycle-bin">
 				<div class="div-align">
