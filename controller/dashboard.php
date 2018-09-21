@@ -10,6 +10,11 @@ $Action          = Request('Post', 'Action', false);
 switch ($Action) {
 	case 'Parameter':
 		$SuccessNumber = 0;
+		$UploadWhiteList = Request('Post', 'UploadWhiteUserListParameter', '');
+        if (IsJson($UploadWhiteList)) {
+            $SuccessNumber += file_put_contents(LibraryPath . 'WhiteUserList.config.json', $UploadWhiteList) === false ? 0 : 1;
+        }
+
 		$UploadParameters = Request('Post', 'UploadParameters', '');
 		if (IsJson($UploadParameters)) {
 			$SuccessNumber += file_put_contents(LibraryPath . 'Uploader.config.json', $UploadParameters) === false ? 0 : 1;

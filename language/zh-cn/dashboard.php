@@ -51,6 +51,7 @@ $Lang = array_merge($Lang, array(
 
 	'Upload_Parameters' => '上传参数',
 	'Text_Filter_Parameter' => '文本过滤参数',
+    'White_User_List_Parameter' => '可发言用户白名单',
 
 	'Callback_URL' => '回调地址',
 

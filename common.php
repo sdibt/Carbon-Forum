@@ -675,6 +675,31 @@ function XssEscape($html)
     return $filter->outputHtml();
 }
 
+function getWhiteList() {
+    $file = LibraryPath . 'WhiteUserList.config.json';
+    global $whiteList;
+    $whiteList = array();
+    getList($file, $whiteList);
+}
+
+function getList($path, &$listName) {
+    $listName = json_decode(file_get_contents($path), true);
+}
+
+function saveWhiteList($list) {
+    saveList($list, "whiteList");
+}
+
+function saveList($list, $path) {
+    file_put_contents($path, json_encode($list));
+}
+
+function ckeckUserIsInList($user, $list) {
+    return array_search($user, $list);
+}
+
+getWhiteList();
+
 $UserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 if ($UserAgent) {
     $IsSpider = preg_match('/(bot|crawl|spider|slurp|sohu-search|lycos|robozilla|google)/i', $UserAgent);

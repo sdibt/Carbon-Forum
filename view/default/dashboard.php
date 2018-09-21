@@ -320,6 +320,18 @@ function GenerateSelect($Options, $Name)
 								?></textarea>
 						</td>
 					</tr>
+                    <tr>
+                        <td width="200" align="right"><?php echo $Lang['White_User_List_Parameter']; ?></td>
+                        <td width="auto" align="left">
+							<textarea class="w600 h320" name="UploadWhiteUserListParameter"><?php
+                                if (is_file(LibraryPath . 'WhiteUserList.config.json')) {
+                                    echo CharCV(file_get_contents(LibraryPath . 'WhiteUserList.config.json'));
+                                } else {
+                                    echo CharCV(file_get_contents(LibraryPath . 'WhiteUserList.config.template.json'));
+                                }
+                                ?></textarea>
+                        </td>
+                    </tr>
 					<tr>
 						<td width="200" align="right"></td>
 						<td width="auto" align="left">
@@ -330,6 +342,13 @@ function GenerateSelect($Options, $Name)
 				</table>
 			</form>
 		</div>
+        <div>
+            <form method="get" action="<?php echo $Config['WebsitePath']; ?>/recycle-bin">
+                <div class="div-align">
+                    <input type="submit" value="<?php echo $Lang['Recycle_Bin']; ?>" name="submit" class="textbtn"/>
+                </div>
+            </form>
+        </div>
 		<div>
 			<form method="get" action="<?php echo $Config['WebsitePath']; ?>/recycle-bin">
 				<div class="div-align">
