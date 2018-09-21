@@ -677,36 +677,28 @@ function XssEscape($html)
 
 function getWhiteList() {
     $file = LibraryPath . 'WhiteUserList.config.json';
-    global $whiteList;
-    $whiteList = array();
     if (is_file($file)) {
-        getList($file, $whiteList);
+        return getList($file);
     } else {
-        getList(LibraryPath . 'WhiteUserList.config.template.json', $whiteList);
+        return getList(LibraryPath . 'WhiteUserList.config.template.json');
     }
 
 }
 
-function getList($path, &$listName) {
+function getList($path) {
     if (is_file($path)) {
-        $listName = JsonDecode(file_get_contents($path));
+        return JsonDecode(file_get_contents($path));
+    } else {
+        return array();
     }
 
 }
 
-function saveWhiteList($list) {
-    saveList($list, "whiteList");
-}
-
-function saveList($list, $path) {
-    file_put_contents($path, json_encode($list));
-}
-
-function ckeckUserIsInList($user, $list) {
+function checkUserIsInList($user, $list) {
     return array_search($user, $list);
 }
 
-getWhiteList();
+static $WhiteUserList = array();
 
 $UserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 if ($UserAgent) {

@@ -17,7 +17,6 @@ switch ($Action) {
             $SuccessNumber += file_put_contents(LibraryPath . 'WhiteUserList.config.json',
                 json_encode(explode("\r\n", $UploadWhiteList))) === false ? 0 : 1;
         }
-        getWhiteList();
 
 		$UploadParameters = Request('Post', 'UploadParameters', '');
 		if (IsJson($UploadParameters)) {

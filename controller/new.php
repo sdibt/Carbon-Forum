@@ -70,8 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 			break;	
 		}
-        if(false === ckeckUserIsInList($CurUserName, $whiteList) && !isset($_SESSION['administrator'])) {
-            $Error = "You don\'t be allowed to reply!\\nPlease contact with admin";
+
+        $WhiteUserList = getWhiteList();
+        if(false === checkUserIsInList($CurUserName, $WhiteUserList) && $CurUserRole != 5) {
+            $Error = "你没有权限发布新帖哦, 有问题请联系管理员";
             break;
         }
 

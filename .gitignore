@@ -38,6 +38,7 @@
 /library/logs
 /library/Uploader.config.json
 /library/Filtering.words.config.json
+/Library/WhiteUserList.config.json
 /upload
 .idea/*
 

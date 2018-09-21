@@ -67,9 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 		$Content = $ContentFilterResult['Content'];
 
-
-		if(false === ckeckUserIsInList($CurUserName, $whiteList) && !isset($_SESSION['administrator'])) {
-            $Error = "You don\'t be allowed to reply!\\nPlease contact with admin";
+        $WhiteUserList = getWhiteList();
+		if(false === checkUserIsInList($CurUserName, $WhiteUserList) && $CurUserRole != 5) {
+            $Error = "你没有权限回复帖子哦, 有问题请联系管理员";
             break;
         }
 
