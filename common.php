@@ -687,7 +687,8 @@ function getWhiteList() {
 
 function getList($path) {
     if (is_file($path)) {
-        return JsonDecode(file_get_contents($path));
+        $value = JsonDecode(file_get_contents($path));
+        return !is_array($value) ? array() : $value;
     } else {
         return array();
     }
@@ -695,7 +696,7 @@ function getList($path) {
 }
 
 function checkUserIsInList($user, $list) {
-    return array_search($user, $list);
+    return in_array($user, $list);
 }
 
 static $WhiteUserList = array();
