@@ -324,6 +324,7 @@ function GenerateSelect($Options, $Name)
                         <td width="200" align="right"><?php echo $Lang['White_User_List_Parameter']; ?></td>
                         <td width="auto" align="left">
 							<textarea class="w600 h320" name="UploadWhiteUserListParameter"><?php
+                                $WhiteUserList = getWhiteList();
                                 if (!is_null($WhiteUserList)) foreach ($WhiteUserList as $item) echo $item . "\n";
                                 ?></textarea>
                         </td>
