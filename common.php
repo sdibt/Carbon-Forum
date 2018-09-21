@@ -699,8 +699,6 @@ function checkUserIsInList($user, $list) {
     return in_array($user, $list);
 }
 
-static $WhiteUserList = array();
-
 $UserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 if ($UserAgent) {
     $IsSpider = preg_match('/(bot|crawl|spider|slurp|sohu-search|lycos|robozilla|google)/i', $UserAgent);
