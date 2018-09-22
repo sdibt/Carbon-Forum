@@ -695,6 +695,21 @@ function getList($path) {
 
 }
 
+function isCanNewAndReply($userName, $userRole, $whiteList) {
+    // 超管
+    if ($userRole == 5) {
+        return true;
+    }
+
+    // 其他老师
+    if (isset($_SESSION['contest_creator']) || isset($_SESSION['problem_editor']) ||
+        isset($_SESSION['source_browser'])) {
+        return true;
+    }
+
+    return in_array($userName, $whiteList);
+}
+
 function checkUserIsInList($user, $list) {
     return in_array($user, $list);
 }

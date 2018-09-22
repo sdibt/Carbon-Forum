@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$Content = $ContentFilterResult['Content'];
 
         $WhiteUserList = getWhiteList();
-		if(false === checkUserIsInList($CurUserName, $WhiteUserList) && $CurUserRole != 5) {
+		if(!isCanNewAndReply($CurUserName, $CurUserRole, $WhiteUserList)) {
             $Error = "你没有权限回复帖子哦, 有问题请联系管理员";
             break;
         }

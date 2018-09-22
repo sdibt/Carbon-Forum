@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 
         $WhiteUserList = getWhiteList();
-        if(false === checkUserIsInList($CurUserName, $WhiteUserList) && $CurUserRole != 5) {
+        if(!isCanNewAndReply($CurUserName, $CurUserRole, $WhiteUserList)) {
             $Error = "你没有权限发布新帖哦, 有问题请联系管理员";
             break;
         }
